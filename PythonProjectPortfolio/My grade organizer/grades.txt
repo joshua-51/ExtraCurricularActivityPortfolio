@@ -1,0 +1,7 @@
+English I, Honors,  5.00
+Algebra 2, Honors, C+, 5.00
+Biology, Honors, B, 5.00
+Physical Education I, Regular, A, 3.75
+US History 1, Honors, B, 5.00
+Spanish 2, Accelerated, B-, 5.00
+Band, Accelerated, A-, 5.00
