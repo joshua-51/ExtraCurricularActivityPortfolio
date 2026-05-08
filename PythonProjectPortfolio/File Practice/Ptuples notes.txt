@@ -130,5 +130,3 @@ Convert the list back to a tuple.
 x = ("apple", "banana", "cherry")
 y = list(x)
 y[1] = "kiwi"
-
-AIzaSyC6MLOv3rJ9Md7kd4dFiuhkEspc1sXCc6c
