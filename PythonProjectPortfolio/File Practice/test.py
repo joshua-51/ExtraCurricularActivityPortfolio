@@ -1,7 +1,7 @@
 from google import genai
 
 # 1. Your API key from AI Studio
-GEMINI_API_KEY = "AIzaSyC6MLOv3rJ9Md7kd4dFiuhkEspc1sXCc6c"
+GEMINI_API_KEY = "PRIVATE INFORMATION"
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
