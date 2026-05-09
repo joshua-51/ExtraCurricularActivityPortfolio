@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joshua Kothapalle — Developer · Innovator · Leader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #FF5F00;
+  --orange-dim: #CC4B00;
+  --orange-glow: rgba(255,95,0,0.15);
+  --black: #050505;
+  --off-black: #0d0d0d;
+  --card-bg: #111111;
+  --white: #FAFAFA;
+  --muted: #888;
+  --border: rgba(255,255,255,0.07);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Space Grotesk', 'SF Pro Display', -apple-system, sans-serif;
+}
+ 
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+html { scroll-behavior: smooth; }
+ 
+body {
+  font-family: var(--font-body);
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+ 
+/* CUSTOM CURSOR */
+#cursor {
+  position: fixed;
+  width: 10px; height: 10px;
+  background: var(--orange);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.08s, width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: normal;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid var(--orange);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.18s ease, width 0.2s, height 0.2s, opacity 0.2s;
+  opacity: 0.5;
+}
+body.hovering #cursor { width: 16px; height: 16px; }
+body.hovering #cursor-ring { width: 56px; height: 56px; opacity: 0.3; }
+ 
+/* NOISE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9997;
+  opacity: 0.6;
+}
+ 
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px 60px;
+  mix-blend-mode: normal;
+}
+nav::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(5,5,5,0.95) 0%, transparent 100%);
+  z-index: -1;
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  text-decoration: none;
+}
+.nav-logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--orange); }
+ 
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  padding: 0 60px;
+  overflow: hidden;
+}
+ 
+.hero-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
+}
+ 
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 18vw, 18rem);
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 1s 0.6s forwards;
+  position: relative;
+  z-index: 2;
+}
+.hero-name .first { color: var(--white); display: block; }
+.hero-name .last {
+  display: block;
+  -webkit-text-stroke: 2px var(--orange);
+  color: transparent;
+  position: relative;
+}
+ 
+.hero-tagline {
+  margin-top: 40px;
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 560px;
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeUp 0.8s 1s forwards;
+}
+ 
+.hero-tagline strong { color: var(--white); font-weight: 600; }
+ 
+.hero-cta-row {
+  margin-top: 50px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.2s forwards;
+}
+ 
+.btn-primary {
+  padding: 14px 36px;
+  background: var(--orange);
+  color: var(--black);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  cursor: none;
+  transition: background 0.3s, transform 0.2s;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+.btn-primary:hover { background: var(--orange-dim); transform: translateY(-2px); }
+ 
+.btn-ghost {
+  padding: 14px 36px;
+  background: transparent;
+  color: var(--white);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  cursor: none;
+  transition: border-color 0.3s, color 0.3s;
+}
+.btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
+ 
+/* LARGE BG NUMBER */
+.hero-bg-number {
+  position: absolute;
+  right: -2vw;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 40vw;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+ 
+/* SCROLL INDICATOR */
+.scroll-cue {
+  position: absolute;
+  bottom: 40px;
+  left: 60px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  opacity: 0;
+  animation: fadeIn 1s 1.8s forwards;
+}
+.scroll-cue span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.scroll-line {
+  width: 60px;
+  height: 1px;
+  background: var(--muted);
+  position: relative;
+  overflow: hidden;
+}
+.scroll-line::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: var(--orange);
+  animation: scrollPulse 2s 2s infinite;
+}
+ 
+/* DIVIDER */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin: 0;
+}
+ 
+/* SECTION BASE */
+section { padding: 140px 60px; position: relative; }
+ 
+/* SECTION LABEL */
+.section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+ 
+/* SECTION HEADING */
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 9vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 60px;
+}
+ 
+/* ABOUT */
+#about { background: var(--off-black); }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-body {
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: #aaa;
+  line-height: 1.8;
+}
+.about-body strong { color: var(--white); font-weight: 600; }
+.about-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+.stat-card {
+  background: var(--card-bg);
+  padding: 36px 32px;
+  border-left: 3px solid var(--orange);
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 60px; height: 60px;
+  background: var(--orange-glow);
+  border-radius: 50%;
+  transform: translate(20px, -20px);
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--orange);
+  line-height: 1;
+  display: block;
+}
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+  display: block;
+}
+ 
+/* MARQUEE */
+.marquee-section {
+  overflow: hidden;
+  padding: 40px 0;
+  background: var(--orange);
+  border-top: none;
+  position: relative;
+}
+.marquee-track {
+  display: flex;
+  white-space: nowrap;
+  animation: marquee 20s linear infinite;
+}
+.marquee-track span {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  color: var(--black);
+  padding: 0 40px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.marquee-dot {
+  color: var(--black);
+  opacity: 0.3;
+}
+ 
+/* SKILLS */
+#skills { background: var(--black); }
+.skills-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.skill-block {
+  background: var(--card-bg);
+  padding: 48px 40px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s;
+}
+.skill-block:hover { background: #161616; }
+.skill-block::before {
+  content: attr(data-index);
+  position: absolute;
+  top: 24px; right: 28px;
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+}
+.skill-block-icon {
+  width: 48px; height: 48px;
+  background: var(--orange-glow);
+  border: 1px solid rgba(255,95,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  font-size: 1.4rem;
+}
+.skill-block h3 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+}
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skill-tag {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #bbb;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  transition: border-color 0.3s, color 0.3s;
+}
+.skill-block:hover .skill-tag {
+  border-color: rgba(255,95,0,0.3);
+  color: var(--white);
+}
+ 
+/* ACHIEVEMENTS */
+#achievements { background: var(--off-black); }
+.achieve-list { display: flex; flex-direction: column; gap: 2px; }
+.achieve-item {
+  display: grid;
+  grid-template-columns: 80px 1fr 200px;
+  gap: 40px;
+  align-items: center;
+  padding: 44px 40px;
+  background: var(--card-bg);
+  text-decoration: none;
+  transition: background 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.achieve-item::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 0;
+  background: var(--orange);
+  transition: width 0.4s ease;
+}
+.achieve-item:hover { background: #141414; }
+.achieve-item:hover::before { width: 4px; }
+.achieve-num {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  color: var(--orange);
+  opacity: 0.3;
+  line-height: 1;
+  transition: opacity 0.3s;
+}
+.achieve-item:hover .achieve-num { opacity: 1; }
+.achieve-content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+.achieve-content p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 600px;
+}
+.achieve-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid rgba(255,95,0,0.4);
+  padding: 8px 16px;
+  text-align: center;
+  justify-self: end;
+}
+ 
+/* EXPERIENCE */
+#experience { background: var(--black); }
+.exp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+.exp-card {
+  background: var(--card-bg);
+  padding: 52px 48px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s, transform 0.3s;
+}
+.exp-card:hover { background: #141414; transform: translateY(-4px); }
+.exp-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--orange), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.exp-card:hover::after { transform: scaleX(1); }
+.exp-card-icon {
+  width: 56px; height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin-bottom: 32px;
+  border: 1px solid var(--border);
+  position: relative;
+}
+.exp-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.exp-card p {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+}
+ 
+/* PROJECTS */
+#projects { background: var(--off-black); }
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.project-card {
+  background: var(--card-bg);
+  padding: 44px 40px;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+  transition: background 0.3s;
+  text-decoration: none;
+  display: block;
+}
+.project-card:hover { background: #161616; }
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+}
+.project-num {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--orange);
+  letter-spacing: 0.1em;
+}
+.project-arrow {
+  font-size: 1.2rem;
+  color: var(--muted);
+  transition: transform 0.3s, color 0.3s;
+}
+.project-card:hover .project-arrow {
+  transform: translate(4px, -4px);
+  color: var(--orange);
+}
+.project-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.project-card p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.project-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--orange);
+  border: 1px solid rgba(255,95,0,0.3);
+  padding: 4px 10px;
+}
+ 
+/* MISSION */
+#mission {
+  background: var(--black);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 120px;
+}
+.mission-quote {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 6rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--white);
+  margin-bottom: 40px;
+  position: relative;
+}
+.mission-quote .highlight { color: var(--orange); }
+.mission-body {
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: var(--muted);
+  max-width: 700px;
+  margin: 0 auto 50px;
+  line-height: 1.8;
+}
+.mission-body strong { color: var(--white); font-weight: 600; }
+ 
+/* CONTACT */
+#contact {
+  background: var(--off-black);
+  padding: 140px 60px;
+  position: relative;
+  overflow: hidden;
+}
+#contact::before {
+  content: 'HELLO';
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 28vw;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.02);
+  bottom: -5vw;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.contact-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+}
+.contact-email {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  color: var(--white);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  display: inline-block;
+  position: relative;
+  transition: color 0.3s;
+  line-height: 1;
+  margin: 30px 0;
+}
+.contact-email::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: var(--orange);
+  transition: width 0.4s ease;
+}
+.contact-email:hover { color: var(--orange); }
+.contact-email:hover::after { width: 100%; }
+.contact-tagline {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0;
+}
+ 
+/* FOOTER */
+footer {
+  background: var(--black);
+  border-top: 1px solid var(--border);
+  padding: 40px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+}
+.footer-logo span { color: var(--orange); }
+.footer-copy {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+.footer-links { display: flex; gap: 32px; }
+.footer-links a {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--orange); }
+ 
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes scrollPulse {
+  from { left: -100%; }
+  to   { left: 100%; }
+}
+ 
+/* SCROLL REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+ 
+/* ORANGE LINE ACCENT */
+.line-accent {
+  width: 60px;
+  height: 3px;
+  background: var(--orange);
+  margin-bottom: 30px;
+}
+ 
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 20px 24px; }
+  nav .nav-links { display: none; }
+  section { padding: 80px 24px; }
+  #hero { padding: 0 24px; }
+  .about-grid, .skills-columns, .exp-grid, .projects-grid { grid-template-columns: 1fr; }
+  .achieve-item { grid-template-columns: 60px 1fr; }
+  .achieve-badge { display: none; }
+  #mission { padding: 80px 24px; }
+  #contact { padding: 80px 24px; }
+  footer { flex-direction: column; gap: 20px; text-align: center; }
+}
+</style>
+</head>
+<body>
+ 
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+ 
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">JK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+ 
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-number">J</div>
+  <p class="hero-eyebrow">Freshman &bull; Developer &bull; Open Source Contributor &bull; Robotics Team Member</p>
+  <h1 class="hero-name">
+    <span class="first">Joshua</span>
+    <span class="last">Kothapalle</span>
+  </h1>
+  <p class="hero-tagline">
+    Passionate about <strong>technology, leadership,</strong> and building projects that create 
+    real-world impact — from open-source contributions to websites that help local communities.
+  </p>
+  <div class="hero-cta-row">
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="btn-primary">View Projects ↗</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  </div>
+  <div class="scroll-cue">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+ 
+<!-- MARQUEE -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Python</span><span class="marquee-dot">✦</span>
+    <span>Java</span><span class="marquee-dot">✦</span>
+    <span>JavaScript</span><span class="marquee-dot">✦</span>
+    <span>Open Source</span><span class="marquee-dot">✦</span>
+    <span>Robotics</span><span class="marquee-dot">✦</span>
+    <span>UI/UX Design</span><span class="marquee-dot">✦</span>
+    <span>Git & GitHub</span><span class="marquee-dot">✦</span>
+    <span>Web Development</span><span class="marquee-dot">✦</span>
+    <span>Leadership</span><span class="marquee-dot">✦</span>
+    <span>Python</span><span class="marquee-dot">✦</span>
+    <span>Java</span><span class="marquee-dot">✦</span>
+    <span>JavaScript</span><span class="marquee-dot">✦</span>
+    <span>Open Source</span><span class="marquee-dot">✦</span>
+    <span>Robotics</span><span class="marquee-dot">✦</span>
+    <span>UI/UX Design</span><span class="marquee-dot">✦</span>
+    <span>Git & GitHub</span><span class="marquee-dot">✦</span>
+    <span>Web Development</span><span class="marquee-dot">✦</span>
+    <span>Leadership</span><span class="marquee-dot">✦</span>
+  </div>
+</div>
+ 
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">01 — About</div>
+  <h2 class="section-heading reveal">About Me</h2>
+  <div class="about-grid">
+    <div>
+      <div class="line-accent"></div>
+      <p class="about-body reveal reveal-delay-1">
+        My name is <strong>Joshua</strong>, and I'm a highly motivated freshman with strong interests in 
+        <strong>computer science, engineering, robotics, and entrepreneurship</strong>. I enjoy challenging 
+        myself academically while balancing leadership roles, extracurricular activities, and technical projects.
+      </p>
+      <br>
+      <p class="about-body reveal reveal-delay-2">
+        My goal is to become a well-rounded innovator who combines <strong>technical skill with leadership 
+        and creativity</strong>. Whether I'm coding websites, contributing to open-source libraries, 
+        competing in academic contests, collaborating with my robotics team, or practicing with marching band, 
+        I focus on <strong>discipline, teamwork, and continuous improvement</strong>.
+      </p>
+      <br>
+      <p class="about-body reveal reveal-delay-3">
+        I believe technology should make a difference in people's lives, which is why I enjoy helping 
+        <strong>local businesses and community organizations</strong> through web development and digital solutions.
+      </p>
+    </div>
+    <div class="about-stats reveal reveal-delay-2">
+      <div class="stat-card">
+        <span class="stat-number">CS50</span>
+        <span class="stat-label">Harvard Certificate</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">ACSL</span>
+        <span class="stat-label">Finalist</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">2+</span>
+        <span class="stat-label">Open Source Repos</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">∞</span>
+        <span class="stat-label">Drive to Build</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">02 — Capabilities</div>
+  <h2 class="section-heading reveal">The Skills</h2>
+  <div class="skills-columns">
+    <div class="skill-block reveal reveal-delay-1" data-index="01">
+      <div class="skill-block-icon">🐍</div>
+      <h3>Languages</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">Java</span>
+        <span class="skill-tag">JavaScript</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+      </div>
+    </div>
+    <div class="skill-block reveal reveal-delay-2" data-index="02">
+      <div class="skill-block-icon">⚙️</div>
+      <h3>Technical</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Git & GitHub</span>
+        <span class="skill-tag">Open Source Dev</span>
+        <span class="skill-tag">UI/UX Design</span>
+        <span class="skill-tag">Robotics Engineering</span>
+        <span class="skill-tag">Debugging</span>
+        <span class="skill-tag">Web Development</span>
+      </div>
+    </div>
+    <div class="skill-block reveal reveal-delay-3" data-index="03">
+      <div class="skill-block-icon">🎯</div>
+      <h3>Leadership & Soft Skills</h3>
+      <div class="skill-tags">
+        <span class="skill-tag">Leadership (Tennis)</span>
+        <span class="skill-tag">Discipline (Marching Band)</span>
+        <span class="skill-tag">Communication</span>
+        <span class="skill-tag">Time Management</span>
+        <span class="skill-tag">Adaptability</span>
+        <span class="skill-tag">Critical Thinking</span>
+        <span class="skill-tag">Creativity & Innovation</span>
+        <span class="skill-tag">Problem Solving</span>
+        <span class="skill-tag">Team Collaboration</span>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="section-label">03 — Achievements</div>
+  <h2 class="section-heading reveal">Elite Performance</h2>
+  <div class="achieve-list">
+    <div class="achieve-item reveal reveal-delay-1">
+      <div class="achieve-num">01</div>
+      <div class="achieve-content">
+        <h3>ACSL Finalist</h3>
+        <p>Finalist in the American Computer Science League (ACSL), demonstrating advanced computational thinking and problem-solving skills through competitive programming challenges.</p>
+      </div>
+      <div class="achieve-badge">Competitive Programming</div>
+    </div>
+    <div class="achieve-item reveal reveal-delay-2">
+      <div class="achieve-num">02</div>
+      <div class="achieve-content">
+        <h3>Harvard CS50 Python Certificate</h3>
+        <p>Earned a Python Developer certificate through Harvard's CS50 program, strengthening understanding of algorithms, programming fundamentals, and software engineering concepts.</p>
+      </div>
+      <div class="achieve-badge">Certified</div>
+    </div>
+    <div class="achieve-item reveal reveal-delay-3">
+      <div class="achieve-num">03</div>
+      <div class="achieve-content">
+        <h3>Open Source Contributions</h3>
+        <p>Contributed to widely used Python libraries including <strong style="color:#fff">Requests</strong> and <strong style="color:#fff">Pandas</strong> through GitHub, gaining experience with collaborative software development, debugging, and large-scale codebases.</p>
+      </div>
+      <div class="achieve-badge">GitHub</div>
+    </div>
+    <div class="achieve-item reveal reveal-delay-4">
+      <div class="achieve-num">04</div>
+      <div class="achieve-content">
+        <h3>Robotics Team Member</h3>
+        <p>Active member of school's robotics team, collaborating on engineering, programming, and design challenges while learning real-world teamwork and technical problem-solving.</p>
+      </div>
+      <div class="achieve-badge">Engineering</div>
+    </div>
+    <div class="achieve-item reveal reveal-delay-5">
+      <div class="achieve-num">05</div>
+      <div class="achieve-content">
+        <h3>Community Impact</h3>
+        <p>Built websites and digital solutions for local restaurants and community organizations, helping businesses improve their online presence and connect with customers.</p>
+      </div>
+      <div class="achieve-badge">Impact</div>
+    </div>
+  </div>
+</section>
+ 
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">04 — Experience</div>
+  <h2 class="section-heading reveal">The Work</h2>
+  <div class="exp-grid">
+    <div class="exp-card reveal reveal-delay-1">
+      <div class="exp-card-icon">🔧</div>
+      <h3>Open Source Contributor</h3>
+      <p>Contributed to open-source Python projects including the <strong style="color:#fff">Requests</strong> and <strong style="color:#fff">Pandas</strong> libraries. Worked with real-world codebases, version control systems, issue tracking, and collaborative development practices used by professional software engineers.</p>
+    </div>
+    <div class="exp-card reveal reveal-delay-2">
+      <div class="exp-card-icon">🌐</div>
+      <h3>Web Developer for Local Businesses</h3>
+      <p>Designed and developed websites for local restaurants and community organizations, focusing on <strong style="color:#fff">modern design, accessibility, responsiveness, and user-friendly experiences</strong>.</p>
+    </div>
+    <div class="exp-card reveal reveal-delay-3">
+      <div class="exp-card-icon">🤖</div>
+      <h3>Robotics Team</h3>
+      <p>Collaborated with teammates on robotics design, engineering, programming, and troubleshooting. Developed problem-solving skills while working under deadlines and competition-style environments.</p>
+    </div>
+    <div class="exp-card reveal reveal-delay-4">
+      <div class="exp-card-icon">🥁</div>
+      <h3>Marching Band</h3>
+      <p>Marching band has strengthened <strong style="color:#fff">discipline, focus, and consistency</strong>. Balancing rehearsals, academics, and technical projects has built strong time management and commitment skills.</p>
+    </div>
+    <div class="exp-card reveal reveal-delay-5">
+      <div class="exp-card-icon">🎾</div>
+      <h3>Tennis</h3>
+      <p>Playing tennis has developed <strong style="color:#fff">leadership, resilience, confidence, and composure under pressure</strong> while strengthening teamwork and a competitive mindset.</p>
+    </div>
+    <div class="exp-card reveal reveal-delay-1" style="background: var(--orange-glow); border: 1px solid rgba(255,95,0,0.3);">
+      <div class="exp-card-icon" style="background: rgba(255,95,0,0.2); border-color: rgba(255,95,0,0.5);">⭐</div>
+      <h3>Why I Stand Out</h3>
+      <p>
+        Freshman with real-world development experience &bull; Open-source contributor to major Python libraries &bull; Competitive CS finalist &bull; Leadership through athletics and music &bull; Experience helping local businesses &bull; <strong style="color:#fff">Strong balance of technical ability and communication skills</strong>
+      </p>
+    </div>
+  </div>
+</section>
+ 
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">05 — Projects</div>
+  <h2 class="section-heading reveal">Featured Projects</h2>
+  <div class="projects-grid">
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="project-card reveal reveal-delay-1">
+      <div class="project-card-top">
+        <span class="project-num">01</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3>Personal Portfolio Website</h3>
+      <p>Created a modern portfolio website showcasing projects, achievements, technical skills, extracurricular involvement, and leadership experiences.</p>
+      <div class="project-tags">
+        <span class="project-tag">HTML/CSS</span>
+        <span class="project-tag">JavaScript</span>
+        <span class="project-tag">UI/UX</span>
+      </div>
+    </a>
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="project-card reveal reveal-delay-2">
+      <div class="project-card-top">
+        <span class="project-num">02</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3>Local Restaurant Websites</h3>
+      <p>Developed websites for local restaurants to improve branding, online visibility, and customer engagement with modern design and accessibility.</p>
+      <div class="project-tags">
+        <span class="project-tag">Web Dev</span>
+        <span class="project-tag">Branding</span>
+        <span class="project-tag">Responsive</span>
+      </div>
+    </a>
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="project-card reveal reveal-delay-3">
+      <div class="project-card-top">
+        <span class="project-num">03</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3>Open Source Contributions</h3>
+      <p>Contributed code and improvements to established Python libraries such as Requests and Pandas through GitHub collaboration and version control workflows.</p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">GitHub</span>
+        <span class="project-tag">Open Source</span>
+      </div>
+    </a>
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="project-card reveal reveal-delay-4">
+      <div class="project-card-top">
+        <span class="project-num">04</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3>Python Projects</h3>
+      <p>Built Python-based applications focused on automation, productivity, and problem-solving using skills developed through Harvard's CS50 program.</p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Automation</span>
+        <span class="project-tag">CS50</span>
+      </div>
+    </a>
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="project-card reveal reveal-delay-5">
+      <div class="project-card-top">
+        <span class="project-num">05</span>
+        <span class="project-arrow">↗</span>
+      </div>
+      <h3>Robotics Projects</h3>
+      <p>Worked on robotics engineering and programming tasks as part of school's robotics team, integrating software and hardware under real-world constraints.</p>
+      <div class="project-tags">
+        <span class="project-tag">Robotics</span>
+        <span class="project-tag">Engineering</span>
+        <span class="project-tag">Programming</span>
+      </div>
+    </a>
+    <div class="project-card reveal reveal-delay-1" style="background: var(--black); border: 1px dashed rgba(255,95,0,0.3); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; min-height:280px;">
+      <div style="font-family: var(--font-display); font-size: 4rem; color: var(--orange); line-height:1; margin-bottom: 16px;">→</div>
+      <p style="font-size:0.8rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">More on GitHub</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- MISSION -->
+<section id="mission">
+  <div class="section-label" style="text-align:center">06 — The Goal</div>
+  <div class="mission-quote reveal">
+    Technology.<br>
+    Creativity.<br>
+    <span class="highlight">Leadership.</span>
+  </div>
+  <p class="mission-body reveal reveal-delay-1">
+    I'm constantly looking for opportunities to grow as a <strong>developer, leader, and student</strong>. 
+    My long-term goal is to pursue impactful internships, contribute to innovative technology projects, 
+    and attend a <strong>top university</strong> where I can continue building meaningful solutions.
+    I aim to combine technology, creativity, and leadership to make a 
+    <strong>positive impact</strong> in engineering, software development, and my community.
+  </p>
+  <div class="hero-cta-row" style="justify-content:center;" class="reveal">
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="btn-primary">View All Projects ↗</a>
+    <a href="#contact" class="btn-ghost">Let's Connect</a>
+  </div>
+</section>
+ 
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-label">07 — Contact</div>
+    <h2 class="section-heading reveal" style="margin-bottom:0;">Let's Build<br>Something.</h2>
+    <p class="contact-tagline reveal reveal-delay-1" style="margin-top: 30px;">I'm always open to opportunities, collaborations, internships, and new projects.</p>
+    <a href="mailto:joshua.kp0812@gmail.com" class="contact-email reveal reveal-delay-2">
+      joshua.kp0812@gmail.com
+    </a>
+    <br>
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank" class="btn-primary reveal reveal-delay-3" style="display:inline-block; margin-top: 20px;">
+      GitHub Portfolio ↗
+    </a>
+  </div>
+</section>
+ 
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">JK<span>.</span></div>
+  <div class="footer-links">
+    <a href="mailto:joshua.kp0812@gmail.com">Email</a>
+    <a href="https://github.com/joshua-51/ExtraCurricularActivityPortfolio.git" target="_blank">GitHub</a>
+  </div>
+  <p class="footer-copy">© 2026 Joshua Kothapalle</p>
+</footer>
+ 
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+function animCursor() {
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animCursor);
+}
+animCursor();
+document.querySelectorAll('a, button, .project-card, .achieve-item, .exp-card, .skill-block').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+});
+ 
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+ 
+// NAV SCROLL EFFECT
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.padding = window.scrollY > 60 ? '18px 60px' : '28px 60px';
+});
+ 
+// HERO BG NUMBER PARALLAX
+const bgNum = document.querySelector('.hero-bg-number');
+window.addEventListener('scroll', () => {
+  if (bgNum) bgNum.style.transform = `translateY(calc(-50% + ${window.scrollY * 0.3}px))`;
+});
+</script>
+</body>
+</html>
