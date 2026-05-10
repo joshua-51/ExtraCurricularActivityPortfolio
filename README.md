@@ -142,7 +142,27 @@ Diverse Python projects demonstrating web development, game creation, automation
     * Improved the developer onboarding experience by auditing and updating documentation links.
     * Reviewed and approved by project maintainers.
 
-## 🏆 Highlighted Projects
+## � Websites
+
+### GPA Calculator Web App ([GPA-CALC WEBSITE /](WEBSITES/GPA-CALC%20WEBSITE%20/))
+A modern web application for calculating GPA from grade screenshots using OCR technology.
+
+**Key Features:**
+- **OCR Integration**: Upload screenshots of report cards to automatically extract grades
+- **Flexible GPA Calculation**: Support for both weighted and unweighted GPA calculations
+- **Multi-Period Support**: Handle multiple marking periods with customizable period counts
+- **Modern Tech Stack**: Built with React, TanStack Router, TypeScript, and Tailwind CSS
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
+
+**Technologies Used:**
+- React with TanStack Router for routing
+- TypeScript for type safety
+- Tailwind CSS for styling
+- Radix UI components for accessibility
+- Supabase for backend services
+- OCR processing for grade extraction
+
+## �🏆 Highlighted Projects
 
 These projects best demonstrate my technical skills and growth as a developer:
 
